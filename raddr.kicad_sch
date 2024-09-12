@@ -1478,16 +1478,6 @@
 	)
 	(wire
 		(pts
-			(xy 134.62 34.29) (xy 134.62 38.1)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "252a5340-2a5a-475f-9d36-3ecf6f722ab0")
-	)
-	(wire
-		(pts
 			(xy 152.4 87.63) (xy 152.4 92.71)
 		)
 		(stroke
@@ -1578,16 +1568,6 @@
 	)
 	(wire
 		(pts
-			(xy 120.65 38.1) (xy 134.62 38.1)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "7f543153-a096-488b-a1c0-22aaf4287678")
-	)
-	(wire
-		(pts
 			(xy 204.47 45.72) (xy 209.55 45.72)
 		)
 		(stroke
@@ -1655,16 +1635,6 @@
 			(type default)
 		)
 		(uuid "b63159be-1afb-46ee-a081-4f21a437de6c")
-	)
-	(wire
-		(pts
-			(xy 99.06 36.83) (xy 120.65 38.1)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "bd2c3ce3-d5aa-4f35-8926-a59e543b9909")
 	)
 	(wire
 		(pts
@@ -1854,6 +1824,28 @@
 			)
 		)
 	)
+	(global_label "PROG_VPP"
+		(shape input)
+		(at 99.06 36.83 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "2956d175-d322-444e-9b96-711b08eeb65e")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 106.2784 36.83 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "SWITCH"
 		(shape input)
 		(at 125.73 67.31 0)
@@ -1960,6 +1952,28 @@
 					(size 1.27 1.27)
 				)
 				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "PROG_VPP"
+		(shape input)
+		(at 125.73 72.39 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "d21db280-0d69-4ffb-82ec-786f8722198e")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 132.9484 72.39 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
 				(hide yes)
 			)
 		)
@@ -2265,7 +2279,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(uuid "749bf1c9-e329-49cf-99cc-8f74dfb1434b")
 		(property "Reference" "J3"
 			(at 91.44 33.0199 0)
@@ -2665,7 +2679,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(fields_autoplaced yes)
 		(uuid "a01dad61-6b31-449d-b0e2-830ebc6d0508")
 		(property "Reference" "J4"
@@ -3277,71 +3291,6 @@
 			(project "raddr"
 				(path "/9585471a-96c4-4019-bcf7-b3f1c776d0db"
 					(reference "#PWR010")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:+5VD")
-		(at 134.62 34.29 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "f274d32b-e854-4cf9-bd35-ead19127a3b0")
-		(property "Reference" "#PWR01"
-			(at 134.62 38.1 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+5VD"
-			(at 134.62 29.21 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 134.62 34.29 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 134.62 34.29 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+5VD\""
-			(at 134.62 34.29 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "22bda1b5-3ff5-47f2-af33-3277fa5ee94d")
-		)
-		(instances
-			(project ""
-				(path "/9585471a-96c4-4019-bcf7-b3f1c776d0db"
-					(reference "#PWR01")
 					(unit 1)
 				)
 			)
