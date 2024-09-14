@@ -1,7 +1,7 @@
 # Reverse Addressable Binary Input - Protocol specification
 
 I'm entirely unsure what reasonable timings are for our chip. Therefore I will
-just grab the WS2812B specs and initially based it on that.
+just grab the WS2812B specs and initially base it on that.
 
 ## Timings
 
@@ -27,7 +27,7 @@ Sequence chart:
     +         +-----+
 
     +               +
-    |      RES      |       Time between reads.
+    |      RES      |       Time between cycles.
     +---------------+
 ```
 
@@ -35,7 +35,7 @@ Sequence chart:
 
 I think it is conceivable to use only one pin on the MCU. That might depend
 on how fast the chip is able to switch from input to output. Individual RABI's
-connected together serially will for a 'pack'.
+connected together serially will form a 'pack'.
 
 
 ```
@@ -66,11 +66,11 @@ At REST each RABI in the pack will listen for the signal from the pack leader
 ALPHA, a role played by our MCU. This signal is called a GROWL. When hearing a
 GROWL a RABI will wake up and be on ALERT.
 
-While on ALERT, when HAULED at a RABI will produce a HOWL itself causing the
-next RABI to HOWL (if any left). Otherwise it will copy the HAULS of its
-neighbours by a series of BARKS.
+While on ALERT, when HAULED at, a RABI will communicate its state and produce a
+HOWL itself causing the next RABI to HOWL (if any left). Otherwise it will copy
+the HAULS of its neighbours by a series of BARKS.
 
-To trigger the rest of the pack ALPHA will emit a GROWL to the highest ranked
+To trigger the rest of the pack, ALPHA will emit a GROWL to the highest ranked
 RABI (RABI0) followed by a HOWL. Then, ALPHA will listen to the lowest ranked
 RABI (RABIw) which will BARK all HAULS from the higher ranked RABIES and
 finally HAULS itself.
@@ -118,25 +118,25 @@ If we would represent the above as a state machine we would get the following:
 
 ```
 - REST:
-    Wait for RAISE, GROWL=read(at 600ns).
-    if GROWL
+    Wait for RAISE, IS_GROWL=read(at 600ns).
+    if IS_GROWL
+        write(1) # growl
         goto ALERT.
-    else:
-        # noise/error
-        goto REST
 
 - ALERT:
-    write(GROWL)
-    Wait for RAISE, HOWL=read(at 600ns).
-    if HOWL:
-        write(not HOWL)
-        for k=1..K:
-            write(data[k])
-        write(HOWL)
-        goto REST
+    Wait for RAISE, IS_HOWL=read(at 600ns).
+    write(0) ## not a howl
+    if IS_HOWL:
+        goto HOWL
     else:
-        write(HOWL)
         goto BARK_1
+
+- HOWL:
+    for k=1..K:
+        BARK=data[k]
+        write(BARK)
+    write(1) # howl
+    goto REST
 
 - BARK_1:
     Wait for RAISE, BARK=read(at 600ns).
@@ -158,7 +158,7 @@ Send by ALPHA:
     [GROWL|HOWL]
 ```
 
-Recieved by ALPHA (W=3)
+Received by ALPHA (W=3)
 
 ```
     [GROWL|!HOWL|BARK|BARK|BARK|BARK|BARK|BARK|BARK|BARK|!HOWL|BARK|BARK|BARK|BARK|BARK|BARK|BARK|BARK|!HOWL|BARK|BARK|BARK|BARK|BARK|BARK|BARK|BARK|HOWL]
