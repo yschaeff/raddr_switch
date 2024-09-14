@@ -1,9 +1,12 @@
-# Reverse Addressable Binary Input - Protocol specification
+# Reverse Addressable Binary Inputs (RABIES) - Protocol specification (CANINE)
+
+This document describes the protocol called CANINE that's spoken between
+ALPHA and (between) individual RABIES.
+
+## Timings
 
 I'm entirely unsure what reasonable timings are for our chip. Therefore I will
 just grab the WS2812B specs and initially base it on that.
-
-## Timings
 
 Data transfer time (TH+TL = 1.25us ±600ns):
 
@@ -33,9 +36,11 @@ Sequence chart:
 
 ## Cascade method
 
-I think it is conceivable to use only one pin on the MCU. That might depend
-on how fast the chip is able to switch from input to output. Individual RABI's
-connected together serially will form a 'pack'.
+I think it is conceivable to use only one pin on the MCU. That might depend on
+how fast the chip is able to switch from input to output. Individual RABIES
+connected together serially will form a 'pack'. The RABI closed to the output
+of ALPHA (RABI0) is considered the highest rank and messaged will be relayed
+through lower ranked RABIES. The message from RABI0 will arrive first at ALPHA
 
 
 ```
@@ -44,7 +49,7 @@ connected together serially will form a 'pack'.
     |   +-----+   +-----+   +-----+         |   +-----+
     +---|Di Do|---|Di Do|---|Di Do|----->|--+---|io   |
         |     |   |     |   |     |  (diode)    |     |
-        |RABI0|   |RABI2|   |RABI2|             | MCU |
+        |RABI0|   |RABI2|   |RABI2|             | MCU | (ALPHA)
         +-----+   +-----+   +-----+             +-----+
 ```
 
@@ -56,7 +61,7 @@ I recon this setup would be easier:
     |   +-----+   +-----+   +-----+             +-----+  |
     +---|Di Do|---|Di Do|---|Di Do|-------------|Di Do|--+
         |     |   |     |   |     |             |     |
-        |RABI0|   |RABI2|   |RABI2|             | MCU |
+        |RABI0|   |RABI2|   |RABI2|             | MCU | (ALPHA)
         +-----+   +-----+   +-----+             +-----+
 ```
 
@@ -72,7 +77,7 @@ the HAULS of its neighbours by a series of BARKS.
 
 To trigger the rest of the pack, ALPHA will emit a GROWL to the highest ranked
 RABI (RABI0) followed by a HOWL. Then, ALPHA will listen to the lowest ranked
-RABI (RABIw) which will BARK all HAULS from the higher ranked RABIES and
+RABI (RABIW) which will BARK all HAULS from the higher ranked RABIES and
 finally HAULS itself.
 
 The amount of BARKS per HOWL is 1+K (HOWL + BARKS needed to represent the
@@ -91,7 +96,7 @@ NOTE: If we would assume W=101 and K=32 we would have an update frequency of
 proving / over engineering?
 
 Choosing 8 data bits will have us send 9 bits per switch. Giving us an excuse
-to dub this the K-NINE protocol. =)
+to dub this the CANINE/K-NINE protocol. =)
 
 ## State Machine
 
