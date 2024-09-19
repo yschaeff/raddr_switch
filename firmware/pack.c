@@ -10,34 +10,34 @@
 
 void statemachine(int bit):
 {
-    static int state = REST;
+    static int state = S_REST;
     static int bark_i = K;
 
     switch (state) {
-        case REST:
-            if (bit) { //growl
-                state = ALERT;
-                bark(1, output); //wake up next with growl
+        case S_REST:
+            if (bit == GROWL) { //growl
+                state = S_ALERT;
+                bark(GROWL, output); //wake up next with growl
             }
             break;
-        case ALERT:
-            state = bit?HOWL:BARK;
-            bark(0, output); //Yelp, so next will copy next frame
+        case S_ALERT:
+            state = bit?S_HOWL:S_BARK;
+            bark(BARK, output); //Yelp, so next will copy next frame
             break;
-        case HOWL:
+        case S_BARK:
+            bark(bit, output); //Copy input to output
+            if (!--bark_i) {
+                state = S_ALERT;
+                bark_i = K;
+            }
+            break;
+        case S_HOWL:
             for (int k=0; k<K, k++) {
                 bark_full(SOME_INPUT..., input);
                 sleep_ns(bit?T0L:T1L);//wait low time of bit
             }
-            bark(1, output); //Howl, so next will also go to HOWL
-            state = REST; //we are the last. Get some rest.
-            break;
-        case BARK:
-            bark(bit, output); //Copy input to output
-            if (!--bark_i) {
-                state = ALERT;
-                bark_i = K;
-            }
+            bark(HOWL, output); //Howl, so next will also go to S_HOWL
+            state = S_REST; //we are the last. Get some rest.
             break;
     }
 }

@@ -8,6 +8,18 @@
 
 #define K 8
 
+#define GROWL 1
+
+#define BARK 0
+#define HOWL 1
+
+enum states {
+    S_REST,       //do nothing
+    S_ALERT,      //listen for howl
+    S_HOWL,       //transmit frame
+    S_BARK        //copy frame
+};
+
 void bark(bit, output)
 {
     write(output, 1);
