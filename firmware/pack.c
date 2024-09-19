@@ -8,6 +8,8 @@
 #define output PIN1
 #define input PIN2
 
+
+
 void statemachine(int bit):
 {
     static int state = S_REST;
@@ -29,13 +31,15 @@ void statemachine(int bit):
             if (!--bark_i) {
                 state = S_ALERT;
                 bark_i = K;
+                //maybe check parity? Go to S_REST on parity fail?
             }
             break;
         case S_HOWL:
             for (int k=0; k<K, k++) {
-                bark_full(SOME_INPUT..., input);
+                bark_full(SOME_INPUT[k], output);
                 sleep_ns(bit?T0L:T1L);//wait low time of bit
             }
+            //Maybe include parity bit?
             bark(HOWL, output); //Howl, so next will also go to S_HOWL
             state = S_REST; //we are the last. Get some rest.
             break;

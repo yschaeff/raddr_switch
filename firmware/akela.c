@@ -65,6 +65,24 @@ void wakeup_pack()
     bark_ful(HOWL);
 }
 
+void flip()
+{
+    rabies = (rabies == &rabies_A)? &rabies_B : &rabies_A;
+}
+
+void report(packsize)
+{
+    int *prev[W] = (rabies == &rabies_A)? &rabies_B : &rabies_A;
+    int *curr[W] = rabies;
+
+    //No need to go to W, packsize is the actual size of the pack
+    for (int w = 0; w<packsize; w++) {
+        if ((*prev)[w] != (*curr)[w]) {
+            //event!
+        }
+    }
+}
+
 void main()
 {
     //TODO set input to INPUT, attach interrupt rising edge
@@ -76,25 +94,11 @@ void main()
         wakeup_pack();
         sleep_ms(1);
         if (state == S_HOWL)
-            //TODO cmp A with B and transmit events
+            report(rabi_i)
+            flip()
         else {
             //help! out of sync?
         }
-        //rabi_i contains number of rabies
-        rabies = &rabies_B;
         sleep_ms(9);
-
-        reset_statemachine();
-        wakeup_pack();
-        sleep_ms(1);
-        if (state == S_HOWL)
-            //TODO cmp B with A and transmit events
-        else {
-            //help! out of sync?
-        }
-        //rabi_i contains number of rabies
-        rabies = &rabies_A;
-        sleep_ms(9);
-
     }
 }
