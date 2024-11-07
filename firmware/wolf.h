@@ -20,16 +20,16 @@ enum states {
     S_BARK        //copy frame
 };
 
-void bark(bit, output)
+static inline void bark(int bit, int output)
 {
     write(output, 1);
     sleep_ns(bit?T1H:T0H);
     write(output, 0);
 }
 
-void bark_full(bit, output)
+static inline void bark_full(int bit, int output)
 {
-    bark(bitm output);
+    bark(bit, output);
     sleep_ns(bit?T0L:T1L);//wait low time of bit
 }
 

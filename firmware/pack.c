@@ -35,7 +35,7 @@ void statemachine(int bit)
             }
             break;
         case S_HOWL:
-            for (int k=0; k<K, k++) {
+            for (int k=0; k<K; k++) {
                 bark_full(SOME_INPUT[k], output);
                 sleep_ns(bit?T0L:T1L);//wait low time of bit
             }
@@ -49,6 +49,6 @@ void statemachine(int bit)
 void interrupt_rising()
 {
     sleep_ns((T0H+T1H)/2);
-    bit = read(input);
+    int bit = read(input);
     statemachine(bit);
 }
