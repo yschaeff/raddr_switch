@@ -10,7 +10,7 @@
 
 
 
-void statemachine(int bit):
+void statemachine(int bit)
 {
     static int state = S_REST;
     static int bark_i = K;
