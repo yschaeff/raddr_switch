@@ -1,6 +1,8 @@
 #ifndef WOLF_H
 #define WOLF_H
 
+#include <stdbool.h>
+
 #define T0L 850
 #define T0H 400
 #define T1L 450
@@ -20,16 +22,21 @@ enum states {
     S_BARK        //copy frame
 };
 
-static inline void bark(int bit, int output)
+extern void gpio_set(int);
+extern void sleep_ns(int);
+extern int gpio_get(void);
+extern bool SOME_INPUT[K];
+
+static inline void bark(int bit)
 {
-    write(output, 1);
+    gpio_set(1);
     sleep_ns(bit?T1H:T0H);
-    write(output, 0);
+    gpio_set(0);
 }
 
-static inline void bark_full(int bit, int output)
+static inline void bark_full(int bit)
 {
-    bark(bit, output);
+    bark(bit);
     sleep_ns(bit?T0L:T1L);//wait low time of bit
 }
 

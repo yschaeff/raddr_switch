@@ -5,11 +5,6 @@
 
 #include "wolf.h"
 
-#define output PIN1
-#define input PIN2
-
-
-
 void statemachine(int bit)
 {
     static int state = S_REST;
@@ -19,15 +14,15 @@ void statemachine(int bit)
         case S_REST:
             if (bit == GROWL) { //growl
                 state = S_ALERT;
-                bark(GROWL, output); //wake up next with growl
+                bark(GROWL); //wake up next with growl
             }
             break;
         case S_ALERT:
             state = bit?S_HOWL:S_BARK;
-            bark(BARK, output); //Yelp, so next will copy next frame
+            bark(BARK); //Yelp, so next will copy next frame
             break;
         case S_BARK:
-            bark(bit, output); //Copy input to output
+            bark(bit); //Copy input to output
             if (!--bark_i) {
                 state = S_ALERT;
                 bark_i = K;
@@ -36,11 +31,10 @@ void statemachine(int bit)
             break;
         case S_HOWL:
             for (int k=0; k<K; k++) {
-                bark_full(SOME_INPUT[k], output);
-                sleep_ns(bit?T0L:T1L);//wait low time of bit
+                bark_full(SOME_INPUT[k]);
             }
             //Maybe include parity bit?
-            bark(HOWL, output); //Howl, so next will also go to S_HOWL
+            bark(HOWL); //Howl, so next will also go to S_HOWL
             state = S_REST; //we are the last. Get some rest.
             break;
     }
@@ -49,6 +43,6 @@ void statemachine(int bit)
 void interrupt_rising()
 {
     sleep_ns((T0H+T1H)/2);
-    int bit = read(input);
+    int bit = gpio_get();
     statemachine(bit);
 }
