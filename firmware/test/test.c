@@ -15,20 +15,20 @@ void sleep_ns(int tmo) {
     //Nehh, Wolfs do not sleep, but they should remember that the line was low/high
     switch(tmo) {
         case T0H:
-            printf("\trabi 0\n");
+            printf("\trabi: 0\n");
             break;
         case T1H:
-            printf("\trabi 1\n");
+            printf("\trabi: 1\n");
     }
 }
 
-bool SOME_INPUT[K] = {false};
+bool SOME_INPUT[K] = {true, true};
 
 extern void statemachine(int);
 
 void output(bool bit)
 {
-    printf("Akela %d\n", bit);
+    printf("Neighbor: %d\n", bit);
     statemachine(bit);
 }
 
@@ -47,15 +47,22 @@ void test_one_neighbour()
     output(HOWL);
 }
 
+void test_n_neighbours(int n)
+{
+    printf("%d NEIGHBOUR TEST\n", n);
+    output(GROWL);
+    while (n--) {
+        printf("NEIGHBOUR -%d\n", n);
+        output(BARK);
+        for (int k = 0; k<K; k++) output(1);
+    }
+    output(HOWL);
+}
+
 int main(int argc, char **argv)
 {
     test_no_neighbours();
     test_one_neighbour();
     test_one_neighbour();
-
-    /* Basic test: Toggle the input and see what happens. */
-    /*for(int i=0;i<2*K;i++) {*/
-        /*tgpio = !tgpio;*/
-        /*statemachine(tgpio);*/
-    /*}*/
+    test_n_neighbours(4);
 }
