@@ -18,7 +18,6 @@
 enum states {
     S_REST,       //do nothing
     S_ALERT,      //listen for howl
-    S_HOWL,       //transmit frame
     S_BARK        //copy frame
 };
 
